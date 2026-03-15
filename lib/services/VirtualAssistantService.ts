@@ -4,6 +4,7 @@ import { get_orders } from '@/lib/tools/get_orders';
 import { get_customers } from '@/lib/tools/get_customers';
 import { get_order_details } from '@/lib/tools/get_order_details';
 import { randomUUID } from 'crypto';
+import { sql } from '@/lib/db';
 
 /**
  * 虛擬助理服務
@@ -25,6 +26,43 @@ export class VirtualAssistantService implements IVirtualAssistantService {
   }
   
   /**
+   * 取得啟用中的提示詞
+   * @param mode - 模式類型
+   * @returns 提示詞內容
+   */
+  private async getActivePrompt(mode: 'direct' | 'indirect_email' | 'indirect_database'): Promise<string> {
+    try {
+      const result = await sql`
+        SELECT content FROM prompts
+        WHERE mode = ${mode} AND is_active = true
+        LIMIT 1
+      `;
+
+      if (result.rows.length > 0) {
+        return result.rows[0].content;
+      }
+
+      // 如果沒有啟用的提示詞，返回預設值
+      const defaults = {
+        direct: '你是一個專業的電商客服助理。你可以幫助客戶查詢訂單、客戶資訊等。請使用繁體中文回應，態度友善且專業。',
+        indirect_email: '你是一個專業的電商客服助理。你需要處理以下電子郵件內容，並根據內容提供適當的回應或執行相應的操作。請使用繁體中文回應。',
+        indirect_database: '你是一個專業的電商客服助理。你需要處理以下資料庫記錄內容，並根據內容提供適當的分析或執行相應的操作。請使用繁體中文回應。'
+      };
+
+      return defaults[mode];
+    } catch (error) {
+      console.error('取得提示詞錯誤:', error);
+      // 返回預設值
+      const defaults = {
+        direct: '你是一個專業的電商客服助理。你可以幫助客戶查詢訂單、客戶資訊等。請使用繁體中文回應，態度友善且專業。',
+        indirect_email: '你是一個專業的電商客服助理。你需要處理以下電子郵件內容，並根據內容提供適當的回應或執行相應的操作。請使用繁體中文回應。',
+        indirect_database: '你是一個專業的電商客服助理。你需要處理以下資料庫記錄內容，並根據內容提供適當的分析或執行相應的操作。請使用繁體中文回應。'
+      };
+      return defaults[mode];
+    }
+  }
+
+  /**
    * 發送訊息（直接注入模式）
    * @param message - 使用者訊息
    * @param sessionId - 會話 ID
@@ -42,11 +80,14 @@ export class VirtualAssistantService implements IVirtualAssistantService {
         .filter(m => m.role === 'user' || m.role === 'assistant')
         .map(m => ({ role: m.role as 'user' | 'assistant', content: m.content }));
       
+      // 取得啟用中的提示詞
+      const systemPrompt = await this.getActivePrompt('direct');
+      
       // 建立對話訊息
       const messages: OpenAI.Chat.ChatCompletionMessageParam[] = [
         {
           role: 'system',
-          content: '你是一個專業的電商客服助理。你可以幫助客戶查詢訂單、客戶資訊等。請使用繁體中文回應，態度友善且專業。'
+          content: systemPrompt
         },
         ...historyMessages,
         {
@@ -152,15 +193,17 @@ export class VirtualAssistantService implements IVirtualAssistantService {
     try {
       const toolCalls: ToolCall[] = [];
       
-      // 根據數據源類型建立不同的系統提示
-      let systemPrompt = '';
+      // 根據數據源類型取得對應的提示詞
+      let promptMode: 'indirect_email' | 'indirect_database';
       if (dataSource === 'email') {
-        systemPrompt = '你是一個專業的電商客服助理。你需要處理以下電子郵件內容，並根據內容提供適當的回應或執行相應的操作。請使用繁體中文回應。';
+        promptMode = 'indirect_email';
       } else if (dataSource === 'database') {
-        systemPrompt = '你是一個專業的電商客服助理。你需要處理以下資料庫記錄內容，並根據內容提供適當的分析或執行相應的操作。請使用繁體中文回應。';
+        promptMode = 'indirect_database';
       } else {
-        systemPrompt = '你是一個專業的電商客服助理。你需要處理以下外部數據源內容，並根據內容提供適當的回應。請使用繁體中文回應。';
+        promptMode = 'indirect_email'; // 預設使用 email 模式
       }
+      
+      const systemPrompt = await this.getActivePrompt(promptMode);
       
       // 建立對話訊息
       const messages: OpenAI.Chat.ChatCompletionMessageParam[] = [

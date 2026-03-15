@@ -11,6 +11,7 @@ import DatabaseEditor from './IndirectInjection/DatabaseEditor';
 import ProcessButton from './IndirectInjection/ProcessButton';
 import ToolCallDisplay from './ToolCallDisplay';
 import AnalysisPanel from './AnalysisPanel';
+import PromptEditor from './PromptEditor';
 import { Session, ToolCall } from '@/types';
 
 const LAST_SESSION_KEY = 'lastDirectSessionId';
@@ -310,6 +311,11 @@ export default function PlaygroundView() {
           載入會話訊息中…
         </div>
       )}
+
+      {/* 提示詞編輯器 */}
+      <div className="mb-6">
+        <PromptEditor mode={appState.currentMode} />
+      </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="lg:col-span-2">

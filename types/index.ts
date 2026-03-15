@@ -70,6 +70,17 @@ export interface AttackRecord {
   tools_called: string[];
 }
 
+// 提示詞
+export interface Prompt {
+  id: string;
+  name: string;
+  mode: 'direct' | 'indirect_email' | 'indirect_database';
+  content: string;
+  is_active: boolean;
+  created_at: Date;
+  updated_at: Date;
+}
+
 // API 請求/回應介面
 
 // POST /api/sessions - 建立會話
@@ -147,6 +158,42 @@ export interface GetOrdersResponse {
 // GET /api/orders/[id]
 export interface GetOrderDetailsResponse {
   order: Order;
+}
+
+// GET /api/prompts
+export interface GetPromptsRequest {
+  mode?: 'direct' | 'indirect_email' | 'indirect_database';
+}
+
+export interface GetPromptsResponse {
+  prompts: Prompt[];
+}
+
+// POST /api/prompts
+export interface CreatePromptRequest {
+  name: string;
+  mode: 'direct' | 'indirect_email' | 'indirect_database';
+  content: string;
+}
+
+export interface CreatePromptResponse {
+  prompt: Prompt;
+}
+
+// PUT /api/prompts/[id]
+export interface UpdatePromptRequest {
+  name?: string;
+  content?: string;
+  is_active?: boolean;
+}
+
+export interface UpdatePromptResponse {
+  prompt: Prompt;
+}
+
+// DELETE /api/prompts/[id]
+export interface DeletePromptResponse {
+  success: boolean;
 }
 
 // 工具定義
