@@ -103,21 +103,22 @@ export default function ChatInterface({ onToolCalls, onAnalyze }: ChatInterfaceP
   };
 
   return (
-    <div className="flex flex-col h-[600px] bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
-      <div className="px-4 py-3 border-b border-slate-100 flex items-center gap-2">
+    <div className="flex flex-col h-[600px] bg-slate-900/50 rounded-xl border border-slate-700/50 shadow-2xl shadow-emerald-500/5 overflow-hidden backdrop-blur-sm">
+      <div className="px-4 py-3 border-b border-slate-700/50 flex items-center gap-2 bg-slate-800/30">
         <div className="w-2 h-2 rounded-full bg-emerald-400"></div>
-        <span className="text-sm font-medium text-slate-700">AI 客服助理</span>
+        <span className="text-sm font-medium text-slate-200 font-mono">AI 客服助理</span>
+        <span className="text-xs text-slate-600 font-mono ml-auto">ONLINE</span>
       </div>
 
       <MessageList messages={state.messages} />
       
       {error && (
-        <div className="mx-4 mb-2 px-3 py-2 bg-red-50 border border-red-200 text-red-700 text-xs rounded-lg">
+        <div className="mx-4 mb-2 px-3 py-2 bg-red-500/10 border border-red-500/30 text-red-400 text-xs rounded-lg font-mono">
           {error}
         </div>
       )}
       
-      <form onSubmit={handleSubmit} className="p-4 border-t border-slate-100">
+      <form onSubmit={handleSubmit} className="p-4 border-t border-slate-700/50 bg-slate-800/30">
         <div className="flex gap-2">
           <input
             type="text"
@@ -125,12 +126,12 @@ export default function ChatInterface({ onToolCalls, onAnalyze }: ChatInterfaceP
             onChange={(e) => setInput(e.target.value)}
             placeholder="輸入訊息..."
             disabled={loading || !state.currentSession}
-            className="flex-1 px-4 py-2.5 text-sm bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent disabled:opacity-50 placeholder:text-slate-400"
+            className="flex-1 px-4 py-2.5 text-sm bg-slate-950/50 border border-slate-700/50 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500/50 disabled:opacity-50 placeholder:text-slate-600 text-slate-300 font-mono"
           />
           <button
             type="submit"
             disabled={loading || !input.trim() || !state.currentSession}
-            className="px-5 py-2.5 bg-indigo-600 text-white text-sm font-medium rounded-lg hover:bg-indigo-700 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+            className="px-5 py-2.5 bg-emerald-500 text-slate-900 text-sm font-bold rounded-lg hover:bg-emerald-400 disabled:opacity-40 disabled:cursor-not-allowed transition-all font-mono"
           >
             {loading ? (
               <span className="flex items-center gap-1.5">

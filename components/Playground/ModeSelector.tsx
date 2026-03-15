@@ -7,26 +7,32 @@ export default function ModeSelector() {
 
   return (
     <div className="mb-6">
-      <div className="inline-flex items-center bg-slate-100 rounded-lg p-1 gap-1">
+      <div className="inline-flex items-center bg-slate-800/50 rounded-lg p-1 gap-1 border border-slate-700/50 backdrop-blur-sm">
         <button
           onClick={() => switchMode('direct')}
-          className={`px-5 py-2 rounded-md text-sm font-medium transition-all ${
+          className={`px-5 py-2 rounded-md text-sm font-medium transition-all font-mono ${
             state.currentMode === 'direct'
-              ? 'bg-white text-slate-900 shadow-sm'
-              : 'text-slate-500 hover:text-slate-700'
+              ? 'bg-emerald-500 text-slate-900'
+              : 'text-slate-400 hover:text-slate-200 hover:bg-slate-700/50'
           }`}
         >
-          直接注入
+          <span className="flex items-center gap-2">
+            {state.currentMode === 'direct' && <span>▸</span>}
+            直接注入
+          </span>
         </button>
         <button
           onClick={() => switchMode('indirect')}
-          className={`px-5 py-2 rounded-md text-sm font-medium transition-all ${
+          className={`px-5 py-2 rounded-md text-sm font-medium transition-all font-mono ${
             state.currentMode === 'indirect'
-              ? 'bg-white text-slate-900 shadow-sm'
-              : 'text-slate-500 hover:text-slate-700'
+              ? 'bg-cyan-500 text-slate-900'
+              : 'text-slate-400 hover:text-slate-200 hover:bg-slate-700/50'
           }`}
         >
-          間接注入
+          <span className="flex items-center gap-2">
+            {state.currentMode === 'indirect' && <span>▸</span>}
+            間接注入
+          </span>
         </button>
       </div>
     </div>

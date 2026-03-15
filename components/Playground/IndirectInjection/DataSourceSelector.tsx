@@ -12,13 +12,13 @@ interface DataSourceSelectorProps {
 export default function DataSourceSelector({ onSelect, selected }: DataSourceSelectorProps) {
   return (
     <div className="flex items-center gap-2 mb-1">
-      <span className="text-xs font-medium text-slate-500 uppercase tracking-wider mr-1">資料來源</span>
+      <span className="text-xs font-medium text-slate-500 uppercase tracking-wider mr-1 font-mono">資料來源</span>
       <button
         onClick={() => onSelect('email')}
-        className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sm font-medium transition-colors ${
+        className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sm font-medium transition-all font-mono ${
           selected === 'email'
-            ? 'bg-indigo-600 text-white'
-            : 'bg-white border border-slate-200 text-slate-600 hover:border-slate-300 hover:text-slate-900'
+            ? 'bg-emerald-500 text-slate-900'
+            : 'bg-slate-800/50 border border-slate-700/50 text-slate-400 hover:border-emerald-500/30 hover:text-emerald-400'
         }`}
       >
         <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
@@ -28,10 +28,10 @@ export default function DataSourceSelector({ onSelect, selected }: DataSourceSel
       </button>
       <button
         onClick={() => onSelect('database')}
-        className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sm font-medium transition-colors ${
+        className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sm font-medium transition-all font-mono ${
           selected === 'database'
-            ? 'bg-indigo-600 text-white'
-            : 'bg-white border border-slate-200 text-slate-600 hover:border-slate-300 hover:text-slate-900'
+            ? 'bg-cyan-500 text-slate-900'
+            : 'bg-slate-800/50 border border-slate-700/50 text-slate-400 hover:border-cyan-500/30 hover:text-cyan-400'
         }`}
       >
         <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">

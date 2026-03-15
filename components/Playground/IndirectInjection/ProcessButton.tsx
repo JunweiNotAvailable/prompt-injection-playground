@@ -72,7 +72,7 @@ export default function ProcessButton({ dataSource, content, onToolCalls, onAnal
       <button
         onClick={handleProcess}
         disabled={loading || !content.trim()}
-        className="w-full inline-flex items-center justify-center gap-2 px-6 py-3 bg-indigo-600 text-white text-sm font-medium rounded-xl hover:bg-indigo-700 disabled:opacity-40 disabled:cursor-not-allowed transition-colors shadow-sm"
+        className="w-full inline-flex items-center justify-center gap-2 px-6 py-3 bg-emerald-500 text-slate-900 text-sm font-bold rounded-xl hover:bg-emerald-400 disabled:opacity-40 disabled:cursor-not-allowed transition-all font-mono"
       >
         {loading ? (
           <>
@@ -84,7 +84,7 @@ export default function ProcessButton({ dataSource, content, onToolCalls, onAnal
           </>
         ) : (
           <>
-            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
+            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" d="M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.348a1.125 1.125 0 010 1.971l-11.54 6.347a1.125 1.125 0 01-1.667-.985V5.653z" />
             </svg>
             觸發 AI 助理處理
@@ -93,7 +93,7 @@ export default function ProcessButton({ dataSource, content, onToolCalls, onAnal
       </button>
 
       {error && (
-        <div className="mt-3 px-4 py-3 bg-red-50 border border-red-200 text-red-700 rounded-lg text-sm flex items-start gap-2">
+        <div className="mt-3 px-4 py-3 bg-red-500/10 border border-red-500/30 text-red-400 rounded-lg text-sm flex items-start gap-2 font-mono">
           <svg className="w-4 h-4 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z" />
           </svg>
@@ -102,12 +102,12 @@ export default function ProcessButton({ dataSource, content, onToolCalls, onAnal
       )}
 
       {result && (
-        <div className="mt-3 bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
-          <div className="px-4 py-2.5 border-b border-slate-100 bg-slate-50">
-            <span className="text-xs font-medium text-slate-500 uppercase tracking-wider">AI 助理回應</span>
+        <div className="mt-3 bg-slate-900/50 rounded-xl border border-slate-700/50 shadow-2xl shadow-emerald-500/5 overflow-hidden backdrop-blur-sm">
+          <div className="px-4 py-2.5 border-b border-slate-700/50 bg-slate-800/30">
+            <span className="text-xs font-medium text-emerald-400 uppercase tracking-wider font-mono">AI 助理回應</span>
           </div>
           <div className="px-4 py-3">
-            <p className="whitespace-pre-wrap text-sm text-slate-700 leading-relaxed">{result}</p>
+            <p className="whitespace-pre-wrap text-sm text-slate-300 leading-relaxed font-mono">{result}</p>
           </div>
         </div>
       )}

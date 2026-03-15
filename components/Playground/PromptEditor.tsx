@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { Prompt } from '@/types';
 
 interface PromptEditorProps {
@@ -14,6 +15,7 @@ export default function PromptEditor({ mode }: PromptEditorProps) {
   const [editingPrompt, setEditingPrompt] = useState<Prompt | null>(null);
   const [formData, setFormData] = useState({ content: '' });
   const [saving, setSaving] = useState(false);
+  const [mounted, setMounted] = useState(false);
 
   // 根據模式決定要顯示的提示詞類型
   const promptModes = mode === 'direct' 
@@ -35,6 +37,10 @@ export default function PromptEditor({ mode }: PromptEditorProps) {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     fetchPrompts();
@@ -86,43 +92,46 @@ export default function PromptEditor({ mode }: PromptEditorProps) {
   };
 
   return (
-    <div className="bg-white rounded-xl border border-slate-200 shadow-sm">
-      <div className="px-4 py-3 border-b border-slate-200">
-        <h3 className="text-sm font-semibold text-slate-900">系統提示詞設定</h3>
-        <p className="text-xs text-slate-500 mt-0.5">編輯助理的行為指令以測試防禦效果</p>
+    <div className="bg-slate-900/50 rounded-xl border border-slate-700/50 shadow-2xl shadow-emerald-500/5 backdrop-blur-sm">
+      <div className="px-4 py-3 border-b border-slate-700/50 bg-slate-800/30">
+        <h3 className="text-sm font-semibold text-slate-200 font-mono flex items-center gap-2">
+          <span className="text-emerald-400">▸</span>
+          系統提示詞設定
+        </h3>
+        <p className="text-xs text-slate-500 mt-0.5 font-mono">編輯助理的行為指令以測試防禦效果</p>
       </div>
 
       <div className="p-4">
         {loading ? (
           <div className="flex items-center justify-center py-8">
-            <svg className="w-5 h-5 animate-spin text-indigo-600" fill="none" viewBox="0 0 24 24">
+            <svg className="w-5 h-5 animate-spin text-emerald-400" fill="none" viewBox="0 0 24 24">
               <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"/>
               <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/>
             </svg>
           </div>
         ) : prompts.length === 0 ? (
-          <p className="text-sm text-slate-400 text-center py-8">尚無提示詞</p>
+          <p className="text-sm text-slate-500 text-center py-8 font-mono">尚無提示詞</p>
         ) : (
           <div className="space-y-3">
             {prompts.map(prompt => (
               <div
                 key={prompt.id}
-                className="p-3 rounded-lg border border-indigo-200 bg-indigo-50"
+                className="p-3 rounded-lg border border-emerald-500/30 bg-emerald-500/10 backdrop-blur-sm"
               >
                 <div className="flex items-start justify-between gap-2 mb-2">
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2">
-                      <h4 className="text-sm font-medium text-slate-900">
+                      <h4 className="text-sm font-medium text-slate-200 font-mono">
                         {getModeLabel(prompt.mode)}
                       </h4>
-                      <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-indigo-100 text-indigo-700">
-                        使用中
+                      <span className="inline-flex items-center px-2 py-0.5 rounded border border-cyan-500/30 text-xs font-medium bg-cyan-500/10 text-cyan-400 font-mono">
+                        ACTIVE
                       </span>
                     </div>
                   </div>
                   <button
                     onClick={() => handleEdit(prompt)}
-                    className="p-1.5 text-slate-400 hover:text-slate-600 hover:bg-slate-100 rounded transition-colors"
+                    className="p-1.5 text-slate-500 hover:text-emerald-400 hover:bg-slate-800/50 rounded transition-colors"
                     title="編輯提示詞"
                   >
                     <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
@@ -130,7 +139,7 @@ export default function PromptEditor({ mode }: PromptEditorProps) {
                     </svg>
                   </button>
                 </div>
-                <p className="text-xs text-slate-600 line-clamp-2">
+                <p className="text-xs text-slate-400 line-clamp-2 font-mono">
                   {prompt.content}
                 </p>
               </div>
@@ -140,48 +149,49 @@ export default function PromptEditor({ mode }: PromptEditorProps) {
       </div>
 
       {/* 編輯對話框 */}
-      {isOpen && editingPrompt && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-xl shadow-xl max-w-2xl w-full max-h-[90vh] overflow-hidden flex flex-col">
-            <div className="px-6 py-4 border-b border-slate-200">
-              <h3 className="text-lg font-semibold text-slate-900">
+      {mounted && isOpen && editingPrompt && createPortal(
+        <div className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-[9999] p-4">
+          <div className="bg-slate-900 border border-slate-700/50 rounded-xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-hidden flex flex-col">
+            <div className="px-6 py-4 border-b border-slate-700/50 bg-slate-800/50">
+              <h3 className="text-lg font-semibold text-slate-100 font-mono flex items-center gap-2">
+                <span className="text-emerald-400">▸</span>
                 編輯提示詞
               </h3>
-              <p className="text-sm text-slate-500 mt-1">
+              <p className="text-sm text-slate-400 mt-1 font-mono">
                 {getModeLabel(editingPrompt.mode)}
               </p>
             </div>
 
             <div className="p-6 overflow-y-auto flex-1">
               <div>
-                <label className="block text-sm font-medium text-slate-700 mb-2">
+                <label className="block text-sm font-medium text-emerald-400 mb-2 font-mono">
                   提示詞內容
                 </label>
                 <textarea
                   value={formData.content}
                   onChange={(e) => setFormData({ content: e.target.value })}
                   rows={14}
-                  className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm font-mono"
+                  className="w-full px-3 py-2 bg-slate-950/50 border border-slate-700/50 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500/50 text-sm font-mono text-slate-300 placeholder-slate-600"
                   placeholder="輸入系統提示詞..."
                 />
-                <p className="mt-2 text-xs text-slate-500">
+                <p className="mt-2 text-xs text-slate-500 font-mono">
                   這段文字將作為系統提示詞傳送給 AI 助理。你可以修改它來測試不同的防禦策略。
                 </p>
               </div>
             </div>
 
-            <div className="px-6 py-4 border-t border-slate-200 flex items-center justify-end gap-2">
+            <div className="px-6 py-4 border-t border-slate-700/50 bg-slate-800/30 flex items-center justify-end gap-2">
               <button
                 onClick={() => setIsOpen(false)}
                 disabled={saving}
-                className="px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-100 rounded-lg transition-colors disabled:opacity-50"
+                className="px-4 py-2 text-sm font-medium text-slate-400 hover:bg-slate-800/50 hover:text-slate-200 rounded-lg transition-colors disabled:opacity-50 font-mono border border-slate-700/50"
               >
                 取消
               </button>
               <button
                 onClick={handleSave}
                 disabled={saving}
-                className="px-4 py-2 text-sm font-medium bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors disabled:opacity-50 inline-flex items-center gap-2"
+                className="px-4 py-2 text-sm font-bold bg-emerald-500 text-slate-900 rounded-lg hover:bg-emerald-400 transition-all disabled:opacity-50 inline-flex items-center gap-2 font-mono"
               >
                 {saving && (
                   <svg className="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
@@ -193,7 +203,8 @@ export default function PromptEditor({ mode }: PromptEditorProps) {
               </button>
             </div>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
     </div>
   );

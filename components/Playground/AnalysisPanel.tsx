@@ -63,24 +63,24 @@ export default function AnalysisPanel({ userInput, assistantResponse, toolsCalle
   };
 
   const panelHeader = (
-    <div className="px-4 py-3 border-b border-slate-100 flex items-center gap-2">
-      <svg className="w-4 h-4 text-slate-400" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+    <div className="px-4 py-3 border-b border-slate-700/50 flex items-center gap-2 bg-slate-800/30">
+      <svg className="w-4 h-4 text-cyan-400" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
         <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
       </svg>
-      <h3 className="text-sm font-semibold text-slate-700">注入分析</h3>
+      <h3 className="text-sm font-semibold text-slate-200 font-mono">注入分析</h3>
     </div>
   );
 
   if (loading) {
     return (
-      <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+      <div className="bg-slate-900/50 rounded-xl border border-slate-700/50 shadow-2xl shadow-cyan-500/5 overflow-hidden backdrop-blur-sm">
         {panelHeader}
         <div className="px-4 py-6 flex items-center justify-center gap-2 text-slate-400">
           <svg className="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
             <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"/>
             <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/>
           </svg>
-          <span className="text-sm">分析中...</span>
+          <span className="text-sm font-mono">分析中...</span>
         </div>
       </div>
     );
@@ -88,10 +88,10 @@ export default function AnalysisPanel({ userInput, assistantResponse, toolsCalle
 
   if (error) {
     return (
-      <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+      <div className="bg-slate-900/50 rounded-xl border border-slate-700/50 shadow-2xl shadow-cyan-500/5 overflow-hidden backdrop-blur-sm">
         {panelHeader}
         <div className="px-4 py-4">
-          <p className="text-sm text-red-600">{error}</p>
+          <p className="text-sm text-red-400 font-mono">{error}</p>
         </div>
       </div>
     );
@@ -99,50 +99,50 @@ export default function AnalysisPanel({ userInput, assistantResponse, toolsCalle
 
   if (!analysis) {
     return (
-      <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+      <div className="bg-slate-900/50 rounded-xl border border-slate-700/50 shadow-2xl shadow-cyan-500/5 overflow-hidden backdrop-blur-sm">
         {panelHeader}
         <div className="px-4 py-6 text-center">
-          <p className="text-sm text-slate-400">等待分析結果...</p>
+          <p className="text-sm text-slate-500 font-mono">等待分析結果...</p>
         </div>
       </div>
     );
   }
 
   const severityConfig = {
-    low: { label: '低風險', className: 'bg-emerald-50 text-emerald-700 border-emerald-200' },
-    medium: { label: '中風險', className: 'bg-amber-50 text-amber-700 border-amber-200' },
-    high: { label: '高風險', className: 'bg-red-50 text-red-700 border-red-200' }
+    low: { label: '低風險', className: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30' },
+    medium: { label: '中風險', className: 'bg-amber-500/10 text-amber-400 border-amber-500/30' },
+    high: { label: '高風險', className: 'bg-red-500/10 text-red-400 border-red-500/30' }
   };
 
   return (
-    <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+    <div className="bg-slate-900/50 rounded-xl border border-slate-700/50 shadow-2xl shadow-cyan-500/5 overflow-hidden backdrop-blur-sm">
       {panelHeader}
 
       <div className="p-4 space-y-4">
         <div className="grid grid-cols-2 gap-3">
-          <div className="bg-slate-50 rounded-lg p-3">
-            <p className="text-xs text-slate-500 mb-1.5">攻擊結果</p>
-            <div className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold border ${
+          <div className="bg-slate-800/50 rounded-lg p-3 border border-slate-700/50">
+            <p className="text-xs text-slate-500 mb-1.5 font-mono">攻擊結果</p>
+            <div className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded border font-mono text-xs font-semibold ${
               analysis.success
-                ? 'bg-red-50 text-red-700 border-red-200'
-                : 'bg-emerald-50 text-emerald-700 border-emerald-200'
+                ? 'bg-red-500/10 text-red-400 border-red-500/30'
+                : 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30'
             }`}>
-              <div className={`w-1.5 h-1.5 rounded-full ${analysis.success ? 'bg-red-500' : 'bg-emerald-500'}`}></div>
+              <div className={`w-1.5 h-1.5 rounded-full ${analysis.success ? 'bg-red-400 animate-pulse' : 'bg-emerald-400'}`}></div>
               {analysis.success ? '注入成功' : '注入失敗'}
             </div>
           </div>
 
-          <div className="bg-slate-50 rounded-lg p-3">
-            <p className="text-xs text-slate-500 mb-1.5">嚴重程度</p>
-            <span className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold border ${severityConfig[analysis.severity].className}`}>
+          <div className="bg-slate-800/50 rounded-lg p-3 border border-slate-700/50">
+            <p className="text-xs text-slate-500 mb-1.5 font-mono">嚴重程度</p>
+            <span className={`inline-flex items-center px-2.5 py-1 rounded text-xs font-semibold border font-mono ${severityConfig[analysis.severity].className}`}>
               {severityConfig[analysis.severity].label}
             </span>
           </div>
         </div>
 
         <div>
-          <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">分析原因</p>
-          <p className="text-sm text-slate-600 bg-slate-50 border border-slate-100 p-3 rounded-lg leading-relaxed">
+          <p className="text-xs font-semibold text-cyan-400 uppercase tracking-wider mb-2 font-mono">分析原因</p>
+          <p className="text-sm text-slate-300 bg-slate-950/50 border border-slate-700/50 p-3 rounded-lg leading-relaxed font-mono">
             {analysis.reason}
           </p>
         </div>
