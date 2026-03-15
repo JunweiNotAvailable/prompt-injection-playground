@@ -6,14 +6,14 @@
 
 ## 任務
 
-- [ ] 1. 設置專案基礎架構
+- [x] 1. 設置專案基礎架構
   - 初始化 Next.js 14+ 專案（App Router）with TypeScript
   - 安裝必要依賴：@vercel/postgres、openai、tailwindcss
   - 配置環境變數（.env.local）：POSTGRES_URL、OPENAI_API_KEY
   - 建立基本目錄結構（app、components、lib、types、contexts）
   - _需求：所有需求的技術基礎_
 
-- [ ] 2. 定義 TypeScript 型別和介面
+- [x] 2. 定義 TypeScript 型別和介面
   - 建立 types/index.ts 檔案
   - 定義資料模型介面（Customer、Order、OrderItem、AttackRecord、ChatMessage、Session、ToolCall）
   - 定義 API 請求/回應介面（CreateSessionRequest/Response、SendMessageRequest/Response 等）
@@ -21,17 +21,17 @@
   - _需求：所有需求的型別安全基礎_
 
 - [ ] 3. 建立資料庫 Schema 和種子數據
-  - [ ] 3.1 建立資料庫連接配置
+  - [x] 3.1 建立資料庫連接配置
     - 建立 lib/db.ts，匯出 sql 客戶端
     - _需求：9.4_
 
-  - [ ] 3.2 建立資料庫表格
+  - [x] 3.2 建立資料庫表格
     - 建立 lib/utils/seed.ts
     - 實作 createTables 函數，建立 customers、orders、sessions、messages、attack_records 表
     - 包含所有索引和約束（外鍵、唯一性、檢查約束）
     - _需求：9.1, 9.2, 9.3_
 
-  - [ ] 3.3 生成虛擬業務數據
+  - [x] 3.3 生成虛擬業務數據
     - 實作 seedDatabase 函數
     - 插入至少 5 筆虛擬客戶記錄（真實感的中文姓名和電子郵件）
     - 插入至少 10 筆虛擬訂單記錄（關聯到有效客戶 ID，多樣化狀態和金額）
@@ -43,19 +43,19 @@
     - **驗證需求：9.3**
 
 - [ ] 4. 實作工具函數（虛擬助理可調用）
-  - [ ] 4.1 實作 get_orders 工具函數
+  - [x] 4.1 實作 get_orders 工具函數
     - 建立 lib/tools/get_orders.ts
     - 從 Postgres 讀取訂單，支援可選的 customerId 過濾
     - 返回 Order[] 型別
     - _需求：4.1_
 
-  - [ ] 4.2 實作 get_customers 工具函數
+  - [x] 4.2 實作 get_customers 工具函數
     - 建立 lib/tools/get_customers.ts
     - 從 Postgres 讀取客戶，支援可選的 email 搜尋
     - 返回 Customer[] 型別
     - _需求：4.2_
 
-  - [ ] 4.3 實作 get_order_details 工具函數
+  - [x] 4.3 實作 get_order_details 工具函數
     - 建立 lib/tools/get_order_details.ts
     - 從 Postgres 讀取特定訂單的完整資訊（包含 items JSONB）
     - 返回 Order | null 型別
@@ -68,7 +68,7 @@
     - _需求：4.1, 4.2, 4.3_
 
 - [ ] 5. 實作虛擬助理服務
-  - [ ] 5.1 建立 VirtualAssistantService 類別
+  - [x] 5.1 建立 VirtualAssistantService 類別
     - 建立 lib/services/VirtualAssistantService.ts
     - 實作 sendMessage 方法（直接注入模式）
     - 實作 processDataSource 方法（間接注入模式）
@@ -78,7 +78,7 @@
     - 使用繁體中文系統提示
     - _需求：2.2, 3.5, 4.4, 4.5, 10.4_
 
-  - [ ] 5.2 實作錯誤處理
+  - [x] 5.2 實作錯誤處理
     - 處理 OpenAI API 錯誤（401、429、網路錯誤）
     - 拋出描述性錯誤訊息（繁體中文）
     - _需求：12.1, 12.2_
@@ -90,7 +90,7 @@
     - _需求：2.2, 4.4, 4.5, 12.2_
 
 - [ ] 6. 實作攻擊分析服務
-  - [ ] 6.1 建立 AttackAnalysisService 類別
+  - [x] 6.1 建立 AttackAnalysisService 類別
     - 建立 lib/services/AttackAnalysisService.ts
     - 實作 analyzeAttack 方法
     - 使用 OpenAI API (gpt-4o-mini) 分析注入嘗試
@@ -98,7 +98,7 @@
     - 使用繁體中文系統提示和回應
     - _需求：5.1, 5.2, 5.3, 5.4, 10.5_
 
-  - [ ] 6.2 實作分析失敗處理
+  - [x] 6.2 實作分析失敗處理
     - 當分析 API 失敗時，返回預設分析結果（success: false, severity: 'low', reason: '分析失敗'）
     - _需求：12.3_
 
@@ -107,7 +107,7 @@
     - **驗證需求：5.2, 5.3, 5.4**
 
 - [ ] 7. 實作會話管理器
-  - [ ] 7.1 建立 SessionManager 類別
+  - [x] 7.1 建立 SessionManager 類別
     - 建立 lib/services/SessionManager.ts
     - 實作 createSession 方法（插入到 sessions 表）
     - 實作 getSession 方法（從 sessions 表讀取）
@@ -121,14 +121,14 @@
     - **驗證需求：11.5**
 
 - [ ] 8. 建立 API Routes - 會話管理
-  - [ ] 8.1 實作 POST /api/sessions
+  - [x] 8.1 實作 POST /api/sessions
     - 建立 app/api/sessions/route.ts
     - 處理 CreateSessionRequest，調用 SessionManager.createSession
     - 返回 CreateSessionResponse
     - 錯誤處理和驗證
     - _需求：11.1, 11.5_
 
-  - [ ] 8.2 實作 GET /api/sessions/[id]
+  - [x] 8.2 實作 GET /api/sessions/[id]
     - 建立 app/api/sessions/[id]/route.ts
     - 調用 SessionManager.getSession
     - 返回會話資料或 404
@@ -140,14 +140,14 @@
     - _需求：11.1, 11.5_
 
 - [ ] 9. 建立 API Routes - 訊息管理
-  - [ ] 9.1 實作 POST /api/messages
+  - [x] 9.1 實作 POST /api/messages
     - 建立 app/api/messages/route.ts
     - 處理 SendMessageRequest
     - 調用 SessionManager.addMessage
     - 返回 SendMessageResponse
     - _需求：2.5_
 
-  - [ ] 9.2 實作 GET /api/messages
+  - [x] 9.2 實作 GET /api/messages
     - 在 app/api/messages/route.ts 新增 GET handler
     - 接受 session_id 查詢參數
     - 調用 SessionManager.getMessages
@@ -155,14 +155,14 @@
     - _需求：2.5_
 
 - [ ] 10. 建立 API Routes - 虛擬助理
-  - [ ] 10.1 實作 POST /api/assistant/chat
+  - [x] 10.1 實作 POST /api/assistant/chat
     - 建立 app/api/assistant/chat/route.ts
     - 處理 AssistantChatRequest
     - 調用 VirtualAssistantService.sendMessage
     - 返回 AssistantChatResponse（包含 tool_calls）
     - _需求：2.2, 2.4, 4.4, 4.5_
 
-  - [ ] 10.2 實作 POST /api/assistant/process
+  - [x] 10.2 實作 POST /api/assistant/process
     - 建立 app/api/assistant/process/route.ts
     - 處理 ProcessDataSourceRequest
     - 調用 VirtualAssistantService.processDataSource
@@ -170,7 +170,7 @@
     - _需求：3.5, 3.6_
 
 - [ ] 11. 建立 API Routes - 攻擊分析
-  - [ ] 11.1 實作 POST /api/analysis
+  - [x] 11.1 實作 POST /api/analysis
     - 建立 app/api/analysis/route.ts
     - 處理 AnalyzeAttackRequest
     - 調用 AttackAnalysisService.analyzeAttack
@@ -183,7 +183,7 @@
     - **驗證需求：5.5**
 
 - [ ] 12. 建立 API Routes - 攻擊記錄
-  - [ ] 12.1 實作 GET /api/attack-records
+  - [x] 12.1 實作 GET /api/attack-records
     - 建立 app/api/attack-records/route.ts
     - 從 attack_records 表讀取所有記錄
     - 按 timestamp DESC 排序
@@ -195,19 +195,19 @@
     - **驗證需求：8.7**
 
 - [ ] 13. 建立 API Routes - 業務數據
-  - [ ] 13.1 實作 GET /api/customers
+  - [x] 13.1 實作 GET /api/customers
     - 建立 app/api/customers/route.ts
     - 從 customers 表讀取所有客戶
     - 返回 GetCustomersResponse
     - _需求：7.1, 7.3_
 
-  - [ ] 13.2 實作 GET /api/orders
+  - [x] 13.2 實作 GET /api/orders
     - 建立 app/api/orders/route.ts
     - 從 orders 表讀取所有訂單
     - 返回 GetOrdersResponse
     - _需求：7.2, 7.4_
 
-  - [ ] 13.3 實作 GET /api/orders/[id]
+  - [x] 13.3 實作 GET /api/orders/[id]
     - 建立 app/api/orders/[id]/route.ts
     - 從 orders 表讀取特定訂單詳情
     - 返回 GetOrderDetailsResponse 或 404
@@ -218,21 +218,21 @@
     - **驗證需求：9.4**
 
 - [ ] 14. 建立全域狀態管理
-  - [ ] 14.1 建立 AppContext
+  - [x] 14.1 建立 AppContext
     - 建立 contexts/AppContext.tsx
     - 使用 React Context API + useReducer
     - 管理當前視圖（playground/dashboard）、當前模式（direct/indirect）
     - 提供 actions：switchView、switchMode
     - _需求：1.3, 6.3_
 
-  - [ ] 14.2 建立 SessionContext
+  - [x] 14.2 建立 SessionContext
     - 建立 contexts/SessionContext.tsx
     - 管理當前會話、對話歷史、攻擊記錄
     - 提供 actions：createSession、addMessage、loadMessages
     - _需求：2.5, 11.1, 11.2_
 
 - [ ] 15. 建立導航元件
-  - [ ] 15.1 實作 Navigation 元件
+  - [x] 15.1 實作 Navigation 元件
     - 建立 components/Navigation.tsx
     - 顯示 Playground 和 Dashboard 切換按鈕
     - 標示當前視圖（使用不同樣式）
@@ -245,7 +245,7 @@
     - **驗證需求：6.4**
 
 - [ ] 16. 建立 Playground 視圖 - 模式選擇
-  - [ ] 16.1 實作 ModeSelector 元件
+  - [x] 16.1 實作 ModeSelector 元件
     - 建立 components/Playground/ModeSelector.tsx
     - 顯示直接注入和間接注入選項
     - 標示當前選擇的模式
@@ -259,7 +259,7 @@
     - **驗證需求：1.3, 1.4**
 
 - [ ] 17. 建立 Playground 視圖 - 直接注入模式
-  - [ ] 17.1 實作 ChatInterface 元件
+  - [x] 17.1 實作 ChatInterface 元件
     - 建立 components/Playground/DirectInjection/ChatInterface.tsx
     - 包含訊息輸入框和發送按鈕
     - 調用 POST /api/assistant/chat
@@ -267,7 +267,7 @@
     - 錯誤處理和通知
     - _需求：2.1, 2.2_
 
-  - [ ] 17.2 實作 MessageList 元件
+  - [x] 17.2 實作 MessageList 元件
     - 建立 components/Playground/DirectInjection/MessageList.tsx
     - 顯示對話歷史（user 和 assistant 訊息）
     - 區分使用者和助理訊息的樣式
@@ -280,25 +280,25 @@
     - **驗證需求：2.2, 2.4, 2.5**
 
 - [ ] 18. 建立 Playground 視圖 - 間接注入模式
-  - [ ] 18.1 實作 DataSourceSelector 元件
+  - [x] 18.1 實作 DataSourceSelector 元件
     - 建立 components/Playground/IndirectInjection/DataSourceSelector.tsx
     - 顯示數據源選項（電子郵件、資料庫記錄）
     - 切換當前選擇的數據源
     - _需求：3.2, 3.3_
 
-  - [ ] 18.2 實作 EmailEditor 元件
+  - [x] 18.2 實作 EmailEditor 元件
     - 建立 components/Playground/IndirectInjection/EmailEditor.tsx
     - 顯示可編輯的電子郵件內容（textarea）
     - 儲存修改到本地狀態
     - _需求：3.3, 3.4_
 
-  - [ ] 18.3 實作 DatabaseEditor 元件
+  - [x] 18.3 實作 DatabaseEditor 元件
     - 建立 components/Playground/IndirectInjection/DatabaseEditor.tsx
     - 顯示可編輯的資料庫記錄內容（textarea）
     - 儲存修改到本地狀態
     - _需求：3.3, 3.4_
 
-  - [ ] 18.4 實作 ProcessButton 元件
+  - [x] 18.4 實作 ProcessButton 元件
     - 建立 components/Playground/IndirectInjection/ProcessButton.tsx
     - 觸發虛擬助理處理數據源
     - 調用 POST /api/assistant/process
@@ -312,7 +312,7 @@
     - **驗證需求：3.3, 3.4, 3.5, 3.6**
 
 - [ ] 19. 建立 Playground 視圖 - 工具調用顯示
-  - [ ] 19.1 實作 ToolCallDisplay 元件
+  - [x] 19.1 實作 ToolCallDisplay 元件
     - 建立 components/Playground/ToolCallDisplay.tsx
     - 顯示虛擬助理調用的工具列表
     - 顯示每個工具的名稱、參數和結果
@@ -325,7 +325,7 @@
     - **驗證需求：4.5, 4.6**
 
 - [ ] 20. 建立 Playground 視圖 - 攻擊分析面板
-  - [ ] 20.1 實作 AnalysisPanel 元件
+  - [x] 20.1 實作 AnalysisPanel 元件
     - 建立 components/Playground/AnalysisPanel.tsx
     - 在每次助理回應後自動觸發分析
     - 調用 POST /api/analysis
@@ -339,7 +339,7 @@
     - **驗證需求：5.1, 5.6**
 
 - [ ] 21. 建立 Playground 主視圖
-  - [ ] 21.1 實作 PlaygroundView 元件
+  - [x] 21.1 實作 PlaygroundView 元件
     - 建立 components/Playground/PlaygroundView.tsx
     - 整合 ModeSelector、ChatInterface/DataSourceSelector、ToolCallDisplay、AnalysisPanel
     - 根據當前模式顯示對應的介面
@@ -353,14 +353,14 @@
     - **驗證需求：11.2, 11.3, 11.4**
 
 - [ ] 22. 建立 Dashboard 視圖 - 業務數據面板
-  - [ ] 22.1 實作 CustomerList 元件
+  - [x] 22.1 實作 CustomerList 元件
     - 建立 components/Dashboard/CustomerList.tsx
     - 調用 GET /api/customers
     - 顯示客戶列表（表格格式）
     - 顯示客戶 ID、姓名、電子郵件
     - _需求：7.1, 7.3_
 
-  - [ ] 22.2 實作 OrderList 元件
+  - [x] 22.2 實作 OrderList 元件
     - 建立 components/Dashboard/OrderList.tsx
     - 調用 GET /api/orders
     - 顯示訂單列表（表格格式）
@@ -368,14 +368,14 @@
     - 提供查看詳情按鈕
     - _需求：7.2, 7.4_
 
-  - [ ] 22.3 實作 OrderDetails 元件
+  - [x] 22.3 實作 OrderDetails 元件
     - 建立 components/Dashboard/OrderDetails.tsx
     - 調用 GET /api/orders/[id]
     - 顯示訂單完整資訊（包含訂單項目）
     - 使用 Modal 或側邊欄顯示
     - _需求：7.5_
 
-  - [ ] 22.4 實作 BusinessDataPanel 元件
+  - [x] 22.4 實作 BusinessDataPanel 元件
     - 建立 components/Dashboard/BusinessDataPanel.tsx
     - 整合 CustomerList 和 OrderList
     - 使用 Tabs 或分區顯示
@@ -388,7 +388,7 @@
     - **驗證需求：7.3, 7.4, 7.5**
 
 - [ ] 23. 建立 Dashboard 視圖 - 攻擊記錄面板
-  - [ ] 23.1 實作 AttackRecordList 元件
+  - [x] 23.1 實作 AttackRecordList 元件
     - 建立 components/Dashboard/AttackRecordList.tsx
     - 調用 GET /api/attack-records
     - 顯示攻擊記錄列表（表格或卡片格式）
@@ -402,14 +402,14 @@
     - **驗證需求：8.2, 8.3, 8.4, 8.5, 8.6**
 
 - [ ] 24. 建立 Dashboard 主視圖
-  - [ ] 24.1 實作 DashboardView 元件
+  - [x] 24.1 實作 DashboardView 元件
     - 建立 components/Dashboard/DashboardView.tsx
     - 整合 BusinessDataPanel 和 AttackRecordList
     - 使用 Tailwind CSS 佈局（兩欄或分區）
     - _需求：7.1, 8.1_
 
 - [ ] 25. 建立應用程式根佈局和頁面
-  - [ ] 25.1 實作根佈局
+  - [x] 25.1 實作根佈局
     - 建立 app/layout.tsx
     - 包含 AppContext 和 SessionContext Providers
     - 包含 Navigation 元件
@@ -417,41 +417,41 @@
     - 設置繁體中文 lang 屬性
     - _需求：10.1_
 
-  - [ ] 25.2 實作首頁（Playground）
+  - [x] 25.2 實作首頁（Playground）
     - 建立 app/page.tsx
     - 渲染 PlaygroundView 元件
     - _需求：1.3_
 
-  - [ ] 25.3 實作 Dashboard 頁面
+  - [x] 25.3 實作 Dashboard 頁面
     - 建立 app/dashboard/page.tsx
     - 渲染 DashboardView 元件
     - _需求：6.1, 6.2_
 
 - [ ] 26. 整合和最終調整
-  - [ ] 26.1 整合所有元件和 API
+  - [x] 26.1 整合所有元件和 API
     - 確保所有 API Routes 正確連接到服務層
     - 確保所有 React 元件正確使用 Context 和 API
     - 測試完整的使用者流程（直接注入和間接注入）
     - _需求：所有需求_
 
-  - [ ] 26.2 實作錯誤處理和通知
+  - [x] 26.2 實作錯誤處理和通知
     - 在所有 API Routes 加入錯誤處理
     - 在所有元件加入錯誤邊界和通知
     - 確保所有錯誤訊息使用繁體中文
     - _需求：12.1, 12.2, 12.3, 12.4, 12.5, 10.2_
 
-  - [ ] 26.3 優化使用者體驗
+  - [x] 26.3 優化使用者體驗
     - 確保視圖切換在 200 毫秒內完成
     - 加入載入狀態指示器
     - 優化 Tailwind CSS 樣式和響應式設計
     - _需求：6.3_
 
-  - [ ] 26.4 建立資料庫初始化腳本
+  - [x] 26.4 建立資料庫初始化腳本
     - 建立執行 seedDatabase 的腳本或 API endpoint
     - 提供重置虛擬數據的功能
     - _需求：9.5_
 
-- [ ] 27. 檢查點 - 確保所有測試通過
+- [x] 27. 檢查點 - 確保所有測試通過
   - 執行所有單元測試和屬性測試
   - 確認所有功能正常運作
   - 如有問題請詢問使用者
