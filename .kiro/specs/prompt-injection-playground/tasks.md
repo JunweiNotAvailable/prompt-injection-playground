@@ -1,8 +1,8 @@
-# 實作計畫：提示注入遊樂場
+# 實作計畫：提示注入沙盒
 
 ## 概述
 
-本實作計畫將提示注入遊樂場分解為漸進式的開發任務。系統採用 Next.js 14+ (App Router) 全端架構，使用 TypeScript、React 18+、Tailwind CSS、Vercel Postgres 和 OpenAI API。實作將從資料庫設置開始，逐步建構 API Routes、服務層、React 元件，最後整合所有功能。
+本實作計畫將提示注入沙盒分解為漸進式的開發任務。系統採用 Next.js 14+ (App Router) 全端架構，使用 TypeScript、React 18+、Tailwind CSS、Vercel Postgres 和 OpenAI API。實作將從資料庫設置開始，逐步建構 API Routes、服務層、React 元件，最後整合所有功能。
 
 ## 任務
 

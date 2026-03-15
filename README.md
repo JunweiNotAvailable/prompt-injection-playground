@@ -1,4 +1,4 @@
-# 提示注入遊樂場 (Prompt Injection Playground)
+# 提示注入沙盒 (Prompt Injection Playground)
 
 一個教育性工具，讓開發者能夠安全地實驗和理解提示注入攻擊。
 
@@ -71,7 +71,7 @@ npm run dev
 
 ## 使用指南
 
-### 遊樂場 (Playground)
+### 沙盒 (Playground)
 
 1. **選擇注入模式**：
    - **直接注入**：在聊天介面中直接輸入惡意提示
