@@ -2,8 +2,6 @@
 
 一個教育性工具，讓開發者能夠安全地實驗和理解提示注入攻擊。
 
-Playground: https://piplayground-vert.vercel.app
-
 ## 功能特色
 
 - **直接注入模式**：透過聊天介面直接測試提示注入
